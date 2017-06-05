@@ -19,6 +19,7 @@
     "ejs": "~2.5.2",
     "express": "~4.14.0",
     "express-session": "^1.14.2",
+    "figo": "^1.6.3",
     "heroku-ssl-redirect": "0.0.4",
     "knex": "^0.12.6",
     "lodash": "^4.17.4",
