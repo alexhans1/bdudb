@@ -1,6 +1,7 @@
-let conn,
-  knex,
-  Bookshelf;
+/* eslint-disable global-require,no-restricted-syntax */
+let conn;
+let knex;
+let Bookshelf;
 try {
   conn = require('../../knexfile.js'); // read out the DB Conn Data
   knex = require('knex')(conn[process.env.NODE_ENV || 'local']); // require knex query binder
@@ -72,8 +73,7 @@ module.exports = {
                   transaction_date: transaction.bankBookingDate,
                   transaction_from: transaction.counterpartName.substring(0, 45),
                 });
-                console.log(`$$$ Saved registration with ID
-                 ${regId} for user ${transaction.counterpartName}`);
+                console.log(`$$$ Saved registration with ID ${regId} for user ${transaction.counterpartName}`);
               });
           } catch (ex) {
             console.error(ex.message);
