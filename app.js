@@ -4,7 +4,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-if (process.env.NODE_ENV !== 'production') { // only if not production
+if (process.env.NODE_ENV !== 'production') {
+  // only if not production
   require('longjohn'); // for extensive logging in local
 }
 const favicon = require('serve-favicon');
@@ -19,9 +20,7 @@ const session = require('express-session'); // browser sessions for authenticati
 const passport = require('passport'); // Passport is the library we will use to handle storing users within HTTP sessions
 
 // connect to database
-let conn,
-  knex,
-  Bookshelf;
+let conn, knex, Bookshelf;
 try {
   conn = require('./knexfile.js'); // read out the DB Conn Data
   knex = require('knex')(conn[process.env.NODE_ENV || 'local']); // require knex query binder
@@ -51,11 +50,13 @@ app.use(favicon(path.join(__dirname, 'public/images', 'BDU.png')));
 app.use(logger('dev'));
 
 // initialize sessions middleware, set secret to 'keyboard cat' to be used by cookies later I guess ?
-app.use(session({
-  secret: 'keyboard cat2',
-  resave: true,
-  saveUninitialized: true,
-}));
+app.use(
+  session({
+    secret: 'keyboard cat2',
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
 
 app.use(flash());
 app.use(bodyParser.json());
@@ -81,9 +82,7 @@ require('./routes/routes.js')(app, passport, Bookshelf);
 
 // setup scheduled jobs
 if (process.env.NODE_ENV === 'production') {
-  require('./scheduled_jobs/sendDebtMails');
   require('./scheduled_jobs/saveTotalClubDebt');
-  require('./scheduled_jobs/checkTransactionsService/checkBankTransactions');
 }
 
 // catch 404 and forward to error handler
