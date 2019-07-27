@@ -1,7 +1,6 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
     client: 'mysql',
     connection: {
@@ -75,5 +74,4 @@ module.exports = {
       tableName: 'knex_migrations',
     },
   },
-
 };

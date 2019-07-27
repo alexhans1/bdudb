@@ -1,6 +1,4 @@
-
-
-module.exports = (Bookshelf) => {
+module.exports = Bookshelf => {
   // User model
   const User = Bookshelf.Model.extend({
     tableName: 'users',

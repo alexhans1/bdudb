@@ -34,12 +34,12 @@ const authenticateClient = () => {
 
   try {
     request(options)
-      .then((parsedBody) => {
+      .then(parsedBody => {
         if (parsedBody.access_token) {
           authenticateUser(parsedBody.access_token);
         } else console.error('No client token!');
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('$$$ Error while getting client token.');
         console.error(err.message);
       });
@@ -49,7 +49,7 @@ const authenticateClient = () => {
   }
 };
 
-const authenticateUser = (clientToken) => {
+const authenticateUser = clientToken => {
   const options = {
     method: 'POST',
     url: `${baseURL}/oauth/token`,
@@ -68,12 +68,12 @@ const authenticateUser = (clientToken) => {
 
   try {
     request(options)
-      .then((parsedBody) => {
+      .then(parsedBody => {
         if (parsedBody.access_token) {
           updateBankConnection(parsedBody.access_token);
         } else console.error('No user token!');
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('$$$ Error while authenticating user.');
         console.log(err.message);
       });
@@ -83,7 +83,7 @@ const authenticateUser = (clientToken) => {
   }
 };
 
-const updateBankConnection = (userToken) => {
+const updateBankConnection = userToken => {
   const options = {
     method: 'POST',
     url: `${baseURL}/api/v1/bankConnections/update`,
@@ -98,7 +98,7 @@ const updateBankConnection = (userToken) => {
 
   try {
     request(options)
-      .then((parsedBody) => {
+      .then(parsedBody => {
         if (!parsedBody.errors) {
           setTimeout(() => {
             getAllTransactions(userToken);
@@ -108,7 +108,7 @@ const updateBankConnection = (userToken) => {
           console.error(parsedBody.errors);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('$$$ Error while updating bank connection');
         console.log(err.message);
       });
@@ -127,7 +127,9 @@ async function getAllTransactions(userToken) {
       direction: 'income',
       includeChildCategories: true,
       perPage: 500,
-      minBankBookingDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+      minBankBookingDate: moment()
+        .subtract(1, 'days')
+        .format('YYYY-MM-DD'),
     },
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -138,7 +140,9 @@ async function getAllTransactions(userToken) {
   try {
     const response = await request(options);
     if (response.transactions) {
-      const newTransactions = await transactionIdModelHelpers.removeProcessedTransactions(response.transactions);
+      const newTransactions = await transactionIdModelHelpers.removeProcessedTransactions(
+        response.transactions,
+      );
       processTransactions.processTransactions(newTransactions);
       transactionIdModelHelpers.saveTransactionIds(newTransactions);
     }
