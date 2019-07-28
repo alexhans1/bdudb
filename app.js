@@ -80,11 +80,6 @@ app.use('/ranking', rankingApi);
 app.use('/dashboard', dashboard);
 require('./routes/routes.js')(app, passport, Bookshelf);
 
-// setup scheduled jobs
-if (process.env.NODE_ENV === 'production') {
-  require('./scheduled_jobs/saveTotalClubDebt');
-}
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
