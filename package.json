@@ -27,7 +27,7 @@
     "heroku-ssl-redirect": "0.0.4",
     "inherits": "^2.0.3",
     "knex": "^0.13.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.19",
     "longjohn": "^0.2.12",
     "moment": "^2.18.1",
     "morgan": "~1.9.0",
