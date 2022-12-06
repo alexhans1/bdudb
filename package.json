@@ -38,7 +38,7 @@
     "node-schedule": "^1.2.3",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "qs": "^6.5.0",
+    "qs": "^6.5.3",
     "rename-keys": "^1.1.2",
     "req-flash": "0.0.3",
     "request": "^2.81.0",
